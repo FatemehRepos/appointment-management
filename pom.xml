@@ -9,11 +9,11 @@
 	</parent>
 	<groupId>com.sayan</groupId>
 	<artifactId>appointment-management</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>appointment-management</name>
 	<url/>
 	<properties>
-		<java.version>24</java.version>
+		<java.version>21</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
