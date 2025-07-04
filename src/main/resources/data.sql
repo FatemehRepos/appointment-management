@@ -15,7 +15,9 @@ insert into doctor_service (id, doctor_id, service_id, creator_id, last_modifier
 values (1, 1, 1, 1, 1);
 insert into doctor_service (id, doctor_id, service_id, creator_id, last_modifier_id)
 values (2, 1, 2, 1, 1);
+
+insert into patient (id, name, lastname, national_code, creator_id, last_modifier_id)
+values (1, 'فتحی', 'فاطمه', '1273136055', 1, 1);
+
 insert into clinic (id, name, creator_id, last_modifier_id)
 values (1, 'سایان', 1, 1);
-insert into patient (id, name, creator_id, last_modifier_id)
-values (1, 'فاطمه فتحی', 1, 1);

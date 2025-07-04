@@ -32,6 +32,8 @@ public class Appointment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private AppointmentType appointmentType;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private ReservationType reservationType;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Appointment root;
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     private Appointment parent;
