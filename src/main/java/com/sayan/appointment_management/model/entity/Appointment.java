@@ -17,7 +17,7 @@ public class Appointment extends BaseEntity {
 
     @Column(nullable = false)
     private LocalDate appointmentDate;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private LocalTime appointmentTime;
     private LocalDate disableDate;
     private LocalDate endDate;
@@ -33,9 +33,9 @@ public class Appointment extends BaseEntity {
     private AppointmentType appointmentType;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private ReservationType reservationType;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Appointment root;
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY)
     private Appointment parent;
     @ManyToOne(fetch = FetchType.LAZY)
     private Claim claim;

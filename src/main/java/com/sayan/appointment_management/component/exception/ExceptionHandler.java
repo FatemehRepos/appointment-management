@@ -11,7 +11,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @ControllerAdvice
 @RequiredArgsConstructor
@@ -26,10 +28,7 @@ public class ExceptionHandler {
                 .timeStamp(LocalDateTime.now())
                 .status(HttpStatus.NOT_FOUND.value())
                 .path(request.getRequestURI())
-                .error(messageSource.getMessage(
-                        exception.getMessage(),
-                        null,
-                        LocaleContextHolder.getLocale()))
+                .errors(getErrors(exception))
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
@@ -42,12 +41,27 @@ public class ExceptionHandler {
                 .timeStamp(LocalDateTime.now())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .path(request.getRequestURI())
-                .error(messageSource.getMessage(
-                        exception.getMessage(),
-                        null,
-                        Locale.getDefault()))
+                .errors(getMethodArgumentNotValidExceptionErrors(exception))
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    private List<String> getErrors(RuntimeException exception) {
+        return List.of(messageSource.getMessage(
+                exception.getMessage(),
+                null,
+                LocaleContextHolder.getLocale()));
+    }
+
+    private List<String> getMethodArgumentNotValidExceptionErrors(MethodArgumentNotValidException exception) {
+        List<String> validationErrors = new ArrayList<>();
+        exception.getBindingResult().getFieldErrors().forEach(error -> {
+            validationErrors.add(messageSource.getMessage(
+                    Objects.requireNonNull(error.getDefaultMessage()),
+                    null,
+                    LocaleContextHolder.getLocale()));
+        });
+        return validationErrors;
     }
 
 }
