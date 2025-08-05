@@ -1,19 +1,15 @@
 package com.sayan.appointment_management.controller;
 
 import com.sayan.appointment_management.model.request.AppointmentCreationRequest;
-import com.sayan.appointment_management.model.request.AppointmentUpdateRequest;
-import com.sayan.appointment_management.model.response.AppointmentResponse;
 import com.sayan.appointment_management.service.AppointmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,31 +23,6 @@ public class AppointmentController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(appointmentService.create(request));
-    }
-
-    @GetMapping
-    public ResponseEntity<Page<AppointmentResponse>> findAll(
-            @RequestParam(required = false) LocalDate date,
-            @RequestParam(required = false) LocalTime time,
-            Pageable pageable) {
-        return ResponseEntity.ok(appointmentService.findAll(date, time, pageable));
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<
-            AppointmentResponse> findOne(@PathVariable long id) {
-        return ResponseEntity.ok(appointmentService.findOne(id));
-    }
-
-    @PutMapping
-    public ResponseEntity<?> update(@RequestBody @Valid AppointmentUpdateRequest request) {
-        return ResponseEntity.ok(appointmentService.update(request));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id) {
-        appointmentService.delete(id);
-        return ResponseEntity.ok().build();
     }
 
 }

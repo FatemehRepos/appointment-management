@@ -10,9 +10,9 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Service extends BaseEntity {
+public class AppointmentStatus extends BaseEntity {
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String title;
     private boolean disabled;
     private long creatorId;

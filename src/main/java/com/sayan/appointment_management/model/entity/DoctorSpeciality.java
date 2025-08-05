@@ -10,13 +10,11 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class DoctorService extends BaseEntity {
+public class DoctorSpeciality extends BaseEntity {
 
     @ManyToOne(optional = false)
     private Doctor doctor;
     @ManyToOne(optional = false)
-    private Service service;
-    private long creatorId;
-    private long lastModifierId;
+    private Speciality speciality;
 
 }

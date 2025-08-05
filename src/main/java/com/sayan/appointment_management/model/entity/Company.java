@@ -2,6 +2,7 @@ package com.sayan.appointment_management.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,12 +11,16 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Service extends BaseEntity {
+public class Company extends BaseEntity {
 
-    @Column(nullable = false, unique = true)
-    private String title;
-    private boolean disabled;
+    @Column(nullable = false)
+    private String companyName;
+    @Column(unique = true, nullable = false)
+    private String registrationNumber;
     private long creatorId;
     private long lastModifierId;
+
+    @OneToOne
+    private Person person;
 
 }

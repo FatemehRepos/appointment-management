@@ -1,6 +1,5 @@
 package com.sayan.appointment_management.model.entity;
 
-import com.sayan.appointment_management.model.enums.AppointmentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,23 +20,21 @@ public class Appointment extends BaseEntity {
     private LocalTime appointmentTime;
     private LocalDate disableDate;
     private LocalDate endDate;
-    @Enumerated(EnumType.STRING)
-    private AppointmentStatus status;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Patient patient;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private DoctorService doctorService;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private Clinic clinic;
+    private Company company;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private AppointmentType appointmentType;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private ReservationType reservationType;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private AppointmentStatus appointmentStatus;
     @ManyToOne(fetch = FetchType.LAZY)
     private Appointment root;
     @OneToOne(fetch = FetchType.LAZY)
     private Appointment parent;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Claim claim;
 
 }

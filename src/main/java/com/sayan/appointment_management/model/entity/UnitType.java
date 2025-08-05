@@ -10,11 +10,11 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Service extends BaseEntity {
+public class UnitType extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String title;
-    private boolean disabled;
+    private String description;
     private long creatorId;
     private long lastModifierId;
 

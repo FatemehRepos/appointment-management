@@ -1,6 +1,9 @@
 package com.sayan.appointment_management.model.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +26,5 @@ public class BaseEntity {
     private LocalDateTime createAt;
     @UpdateTimestamp
     private LocalDateTime updateAt;
-    private long creatorId;
-    private long lastModifierId;
 
 }

@@ -10,9 +10,14 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Clinic extends BaseEntity {
+public class Speciality extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
+    @Column(nullable = false, unique = true)
+    private String code;
+    private String description;
+    private long creatorId;
+    private long lastModifierId;
 
 }

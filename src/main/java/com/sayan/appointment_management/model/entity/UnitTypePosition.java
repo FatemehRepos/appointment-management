@@ -1,7 +1,7 @@
 package com.sayan.appointment_management.model.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,11 +10,12 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Service extends BaseEntity {
+public class UnitTypePosition extends BaseEntity {
 
-    @Column(nullable = false, unique = true)
-    private String title;
-    private boolean disabled;
+    @ManyToOne(optional = false)
+    private UnitType unitType;
+    @ManyToOne(optional = false)
+    private Position position;
     private long creatorId;
     private long lastModifierId;
 

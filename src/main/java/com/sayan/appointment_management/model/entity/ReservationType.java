@@ -14,5 +14,8 @@ public class ReservationType extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String title;
+    private boolean disabled;
+    private long creatorId;
+    private long lastModifierId;
 
 }

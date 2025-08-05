@@ -11,7 +11,6 @@
 	<artifactId>appointment-management</artifactId>
 	<version>0.0.1</version>
 	<name>appointment-management</name>
-	<url/>
 	<properties>
 		<java.version>21</java.version>
 	</properties>

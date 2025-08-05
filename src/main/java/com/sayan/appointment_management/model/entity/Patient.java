@@ -1,7 +1,7 @@
 package com.sayan.appointment_management.model.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import lombok.*;
 
 @Entity
@@ -12,11 +12,8 @@ import lombok.*;
 @AllArgsConstructor
 public class Patient extends BaseEntity {
 
-    @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    private String lastname;
-    @Column(nullable = false, unique = true)
-    private String nationalCode;
+    private boolean active;
+    @OneToOne
+    private NaturalPerson person;
 
 }

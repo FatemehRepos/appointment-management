@@ -14,7 +14,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient create(Patient patient) {
-        Patient findedPatient = find(patient.getNationalCode());
+        Patient findedPatient = find(patient.getPerson().getNationalCode());
         return findedPatient == null ? patientRepository.save(patient) : findedPatient;
     }
 
