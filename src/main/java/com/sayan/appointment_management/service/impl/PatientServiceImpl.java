@@ -1,5 +1,6 @@
 package com.sayan.appointment_management.service.impl;
 
+import com.sayan.appointment_management.component.exception.RecordNotFoundException;
 import com.sayan.appointment_management.model.entity.Patient;
 import com.sayan.appointment_management.repository.PatientRepository;
 import com.sayan.appointment_management.service.PatientService;
@@ -13,14 +14,9 @@ public class PatientServiceImpl implements PatientService {
     private final PatientRepository patientRepository;
 
     @Override
-    public Patient create(Patient patient) {
-        Patient findedPatient = find(patient.getPerson().getNationalCode());
-        return findedPatient == null ? patientRepository.save(patient) : findedPatient;
-    }
-
-    @Override
-    public Patient find(String nationalCode) {
-        return patientRepository.findByNationalCode(nationalCode).orElse(null);
+    public Patient find(long id) {
+        return patientRepository.findById(id)
+                .orElseThrow(()->new RecordNotFoundException("errors.patient.not.found"));
     }
 
 }

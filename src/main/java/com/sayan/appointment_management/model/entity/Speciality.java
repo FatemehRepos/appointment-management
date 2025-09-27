@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Setter
 @Getter
@@ -14,10 +16,5 @@ public class Speciality extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
-    @Column(nullable = false, unique = true)
-    private String code;
-    private String description;
-    private long creatorId;
-    private long lastModifierId;
 
 }

@@ -13,9 +13,6 @@ import lombok.Setter;
 public class AppointmentStatus extends BaseEntity {
 
     @Column(nullable = false)
-    private String title;
-    private boolean disabled;
-    private long creatorId;
-    private long lastModifierId;
+    private String name;
 
 }

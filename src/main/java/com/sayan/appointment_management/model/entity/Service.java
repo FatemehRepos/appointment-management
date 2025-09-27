@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Entity
 @Setter
 @Getter
@@ -13,9 +14,6 @@ import lombok.Setter;
 public class Service extends BaseEntity {
 
     @Column(nullable = false, unique = true)
-    private String title;
-    private boolean disabled;
-    private long creatorId;
-    private long lastModifierId;
+    private String name;
 
 }

@@ -6,17 +6,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
-public class DoctorService extends BaseEntity {
+public class DoctorCompanyService extends BaseEntity {
+
+    private LocalDateTime disableDate;
 
     @ManyToOne(optional = false)
     private Doctor doctor;
+
+    @ManyToOne(optional = false)
+    private Company company;
+
     @ManyToOne(optional = false)
     private Service service;
-    private long creatorId;
-    private long lastModifierId;
 
 }

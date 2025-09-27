@@ -1,10 +1,10 @@
 package com.sayan.appointment_management.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Setter
@@ -14,17 +14,19 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class DoctorSchedule extends BaseEntity {
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private int dayOfWeek;
+    @Column(nullable = false)
+    private LocalDate date;
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIME)
+    private LocalTime startTime;
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIME)
+    private LocalTime endTime;
+    private int weekDay;
     private int durationMinutes;
-    private long creatorId;
-    private long lastModifierId;
+    private boolean active;
+
     @ManyToOne(optional = false)
-    private Doctor doctor;
-    @ManyToOne(optional = false)
-    private Service service;
-    @ManyToOne(optional = false)
-    private Company company;
+    private DoctorCompanyService doctorCompanyService;
 
 }

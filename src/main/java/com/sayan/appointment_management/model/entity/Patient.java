@@ -1,19 +1,17 @@
 package com.sayan.appointment_management.model.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Setter
 @Getter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
-public class Patient extends BaseEntity {
+public class Patient extends NaturalPerson {
 
-    private boolean active;
-    @OneToOne
-    private NaturalPerson person;
+    private String fullName;
+    private String PatientNationalCode;
 
 }

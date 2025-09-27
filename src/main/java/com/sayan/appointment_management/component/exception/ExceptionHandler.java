@@ -1,12 +1,15 @@
 package com.sayan.appointment_management.component.exception;
 
 import com.sayan.appointment_management.model.response.ErrorResponse;
+import com.sayan.appointment_management.model.response.Response;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
@@ -22,46 +25,42 @@ public class ExceptionHandler {
     private final MessageSource messageSource;
 
     @org.springframework.web.bind.annotation.ExceptionHandler(RecordNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleException(
+    public ResponseEntity<Response<Object>> handleException(
             RecordNotFoundException exception, HttpServletRequest request) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .timeStamp(LocalDateTime.now())
-                .status(HttpStatus.NOT_FOUND.value())
-                .path(request.getRequestURI())
-                .errors(getErrors(exception))
-                .build();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        ErrorResponse error = ErrorResponse.error(
+                HttpStatus.NOT_FOUND.value(),
+                exception.getClass().getName(),
+                messageSource.getMessage(
+                        exception.getMessage(),
+                        null,
+                        LocaleContextHolder.getLocale()));
+        return new ResponseEntity<>(Response.error(List.of(error)), HttpStatus.NOT_FOUND);
     }
-
 
     @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleException(
+    public ResponseEntity<Response<Object>> handleException(
             MethodArgumentNotValidException exception, HttpServletRequest request) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .timeStamp(LocalDateTime.now())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .path(request.getRequestURI())
-                .errors(getMethodArgumentNotValidExceptionErrors(exception))
-                .build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        List<ErrorResponse> errors = getMethodArgumentNotValidExceptionErrors(exception);
+        return new ResponseEntity<>(Response.error(errors), HttpStatus.BAD_REQUEST);
     }
 
-    private List<String> getErrors(RuntimeException exception) {
-        return List.of(messageSource.getMessage(
-                exception.getMessage(),
-                null,
-                LocaleContextHolder.getLocale()));
-    }
-
-    private List<String> getMethodArgumentNotValidExceptionErrors(MethodArgumentNotValidException exception) {
-        List<String> validationErrors = new ArrayList<>();
+    private List<ErrorResponse> getMethodArgumentNotValidExceptionErrors(MethodArgumentNotValidException exception) {
+        List<ErrorResponse> validationErrors = new ArrayList<>();
         exception.getBindingResult().getFieldErrors().forEach(error -> {
-            validationErrors.add(messageSource.getMessage(
-                    Objects.requireNonNull(error.getDefaultMessage()),
-                    null,
-                    LocaleContextHolder.getLocale()));
+            ErrorResponse errorResponse = getErrorResponse(error);
+            validationErrors.add(errorResponse);
         });
         return validationErrors;
+    }
+
+    private ErrorResponse getErrorResponse(FieldError error) {
+        return ErrorResponse.error(
+                Integer.parseInt(Objects.requireNonNull(error.getCode())),
+                error.getClass().getName(),
+                messageSource.getMessage(
+                        Objects.requireNonNull(error.getDefaultMessage()),
+                        null,
+                        LocaleContextHolder.getLocale()));
     }
 
 }

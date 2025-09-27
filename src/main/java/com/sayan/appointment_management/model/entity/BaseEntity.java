@@ -23,8 +23,11 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @CreationTimestamp
-    private LocalDateTime createAt;
+    private LocalDateTime creationDate;
     @UpdateTimestamp
-    private LocalDateTime updateAt;
+    private LocalDateTime lastModificationDate;
+    private int version;
+    private long creatorId;
+    private long lastModifierId;
 
 }

@@ -2,8 +2,7 @@ package com.sayan.appointment_management.service.impl;
 
 import com.sayan.appointment_management.component.exception.RecordNotFoundException;
 import com.sayan.appointment_management.model.entity.Appointment;
-import com.sayan.appointment_management.model.entity.NaturalPerson;
-import com.sayan.appointment_management.model.entity.Patient;
+import com.sayan.appointment_management.model.entity.DoctorSchedule;
 import com.sayan.appointment_management.model.request.AppointmentCreationRequest;
 import com.sayan.appointment_management.repository.AppointmentRepository;
 import com.sayan.appointment_management.service.*;
@@ -11,59 +10,44 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 @Service
 @RequiredArgsConstructor
 public class AppointmentServiceImpl implements AppointmentService {
 
-    private final CompanyService companyService;
+    private static final long SCHEDULED_APPOINTMENT_STATUS_ID = 1L;
     private final PatientService patientService;
-    private final DoctorServiceService doctorService;
+    private final DoctorScheduleService doctorScheduleService;
     private final AppointmentRepository appointmentRepository;
     private final AppointmentTypeService appointmentTypeService;
     private final ReservationTypeService reservationTypeService;
+    private final AppointmentStatusService appointmentStatusService;
 
     @Override
     @Transactional
-    public Appointment create(AppointmentCreationRequest request) {
-        checkForDuplicate(request.appointmentDate(), request.appointmentTime());
-        return appointmentRepository.save(generateAppointment(request));
+    public Appointment create(AppointmentCreationRequest request,long reservationTypeId) throws RecordNotFoundException {
+        checkForDuplicate(request.scheduleId());
+        return appointmentRepository.save(generateAppointment(request,reservationTypeId));
     }
 
-    public void checkForDuplicate(LocalDate appointmentDate, LocalTime appointmentTime) {
-        Appointment appointment = find(appointmentDate, appointmentTime);
+    public void checkForDuplicate(long scheduleId) {
+        Appointment appointment = find(scheduleId);
         if (appointment != null) throw new RecordNotFoundException("error.duplicate.appointment");
     }
 
-    private Appointment find(LocalDate date, LocalTime time) {
-        return appointmentRepository.findByAppointmentDateAndAppointmentTime(date, time)
-                .orElse(null);
+    private Appointment find(long scheduleId) {
+        return appointmentRepository.findByScheduleId(scheduleId).orElse(null);
     }
 
-    private Patient generatePatient(AppointmentCreationRequest request) {
-        return Patient.builder()
-                .active(true)
-                .person(NaturalPerson.builder()
-                        .name(request.name())
-                        .lastname(request.lastname())
-                        .nationalCode(request.nationalCode())
-                        .birthDate(request.birthdate())
-                        .gender(request.gender())
-                        .build())
-                .build();
-    }
-
-    private Appointment generateAppointment(AppointmentCreationRequest request) {
+    private Appointment generateAppointment(AppointmentCreationRequest request, long reservationTypeId) {
+        DoctorSchedule doctorSchedule = doctorScheduleService.find(request.scheduleId());
         return Appointment.builder()
-                .appointmentDate(request.appointmentDate())
-                .appointmentTime(request.appointmentTime())
-                .company(companyService.find(request.companyId()))
-                .patient(patientService.create(generatePatient(request)))
+                .doctorSchedule(doctorSchedule)
+                .appointmentDate(doctorSchedule.getDate())
+                .appointmentTime(doctorSchedule.getStartTime())
+                .patient(patientService.find(request.patientId()))
                 .appointmentType(appointmentTypeService.find(request.appointmentTypeId()))
-                .doctorService(doctorService.find(request.doctorId(), request.doctorId()))
-                .reservationType(reservationTypeService.find(request.reservationTypeId()))
+                .reservationType(reservationTypeService.find(reservationTypeId))
+                .appointmentStatus(appointmentStatusService.find(SCHEDULED_APPOINTMENT_STATUS_ID))
                 .build();
     }
 

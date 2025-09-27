@@ -19,22 +19,26 @@ public class Appointment extends BaseEntity {
     @Column(nullable = false)
     private LocalTime appointmentTime;
     private LocalDate disableDate;
-    private LocalDate endDate;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Patient patient;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private DoctorService doctorService;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private Company company;
+    private DoctorSchedule doctorSchedule;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private AppointmentType appointmentType;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private ReservationType reservationType;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private AppointmentStatus appointmentStatus;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Appointment root;
-    @OneToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Appointment parent;
 
 }

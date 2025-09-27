@@ -12,13 +12,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class LegalPerson extends Person {
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
+    private String economicCode;
+    @Column(unique = true)
     private String nationalCode;
     @Column(unique = true)
-    private String economyCode;
-    @Column(nullable = false)
-    private String name;
-    private long creatorId;
-    private long lastModifierId;
+    private String registrationCode;
 
 }

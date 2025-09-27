@@ -1,8 +1,6 @@
 package com.sayan.appointment_management.model.entity;
 
-import com.sayan.appointment_management.model.enums.Gender;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -16,16 +14,17 @@ import java.time.LocalDate;
 public class NaturalPerson extends Person {
 
     @Column(nullable = false)
-    private String name;
+    private String firstname;
     @Column(nullable = false)
     private String lastname;
+    private String fatherName;
     @Column(nullable = false, unique = true)
     private String nationalCode;
     @Column(nullable = false)
     private LocalDate birthDate;
-    @Column(nullable = false)
-    private Gender gender;
-    private long creatorId;
-    private long lastModifierId;
+    private boolean isDead;
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    private GenderType gender;
 
 }
