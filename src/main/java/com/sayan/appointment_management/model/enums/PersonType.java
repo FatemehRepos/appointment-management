@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ReservationType {
+public enum PersonType {
 
-    IN_PERSON(1), ONLINE(2), BY_PHONE(3);
+    NATURAL(1), LEGAL(2);
 
     private final int id;
 

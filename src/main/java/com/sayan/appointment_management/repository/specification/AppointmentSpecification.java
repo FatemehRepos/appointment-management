@@ -4,22 +4,21 @@ import com.sayan.appointment_management.model.entity.Appointment;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AppointmentSpecification {
 
-    public static Specification<Appointment> appointmentSpecification(LocalDate date, LocalTime time) {
-        return getSpecifications(date, time).stream()
+    public static Specification<Appointment> filter(LocalDate date, Long statusId) {
+        return getSpecifications(date, statusId).stream()
                 .reduce(Specification::and)
                 .orElse((root, query, builder) -> builder.conjunction());
     }
 
-    public static List<Specification<Appointment>> getSpecifications(LocalDate date, LocalTime time) {
+    public static List<Specification<Appointment>> getSpecifications(LocalDate date, Long statusId) {
         List<Specification<Appointment>> specifications = new ArrayList<>();
         if (date != null) specifications.add(getByDate(date));
-        if (time != null) specifications.add(getByTime(time));
+        if (statusId != null) specifications.add(getByStatus(statusId));
         return specifications;
     }
 
@@ -28,9 +27,9 @@ public class AppointmentSpecification {
                 builder.equal(root.get("appointmentDate"), date);
     }
 
-    public static Specification<Appointment> getByTime(LocalTime time) {
+    public static Specification<Appointment> getByStatus(Long statusId) {
         return (root, query, builder) ->
-                builder.equal(root.get("appointmentTime"), time);
+                builder.equal(root.get("appointmentStatus").get("id"), statusId);
     }
 
 }

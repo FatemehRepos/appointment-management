@@ -14,9 +14,14 @@ public class DoctorScheduleServiceImpl implements DoctorScheduleService {
     private final DoctorScheduleRepository doctorScheduleRepository;
 
     @Override
+    public DoctorSchedule create(DoctorSchedule doctorSchedule) {
+        return doctorScheduleRepository.save(doctorSchedule);
+    }
+
+    @Override
     public DoctorSchedule find(long id) {
         return doctorScheduleRepository.findById(id)
-                .orElseThrow(()->new RecordNotFoundException("error.doctor.schedule.not.found"));
+                .orElseThrow(() -> new RecordNotFoundException("error.doctor.schedule.not.found"));
     }
 
 }

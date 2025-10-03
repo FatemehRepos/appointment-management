@@ -2,16 +2,18 @@ package com.sayan.appointment_management.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Setter
 @Getter
+@SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Speciality extends BaseEntity {
 
     @Column(nullable = false, unique = true)

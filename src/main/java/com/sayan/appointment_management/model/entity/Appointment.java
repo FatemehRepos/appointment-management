@@ -2,6 +2,7 @@ package com.sayan.appointment_management.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -9,7 +10,7 @@ import java.time.LocalTime;
 @Entity
 @Setter
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Appointment extends BaseEntity {

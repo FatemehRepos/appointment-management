@@ -1,5 +1,6 @@
 package com.sayan.appointment_management.model.entity;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Getter;

@@ -4,7 +4,7 @@ spring:
   datasource:
     driverClassName: org.h2.Driver
     password: sa
-    url: jdbc:h2:mem:expense-tracker-db
+    url: jdbc:h2:mem:appointment-management-db
     username: sa
   h2:
     console:
@@ -16,4 +16,4 @@ spring:
     show-sql: true
     defer-datasource-initialization: true
 server:
-  port: 8090
+  port: 8094

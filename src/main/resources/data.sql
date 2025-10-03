@@ -11,7 +11,7 @@ VALUES (1, 'شخص حقیقی', 'NATURAL', '2025-01-01T07:00:00', '2025-01-01T07
 -- Seed persons
 INSERT INTO person (id, name, unique_field, person_type_id, disable_date, root_id, parent_id,
                     creation_date, last_modification_date, version, creator_id, last_modifier_id)
-VALUES (1, 'علی احمدی', 'NP-1001', 1, NULL, NULL, NULL, '2025-01-01T08:00:00', '2025-01-01T08:00:00', 1, 1, 1),
+VALUES (19, 'علی احمدی', 'NP-1001', 1, NULL, NULL, NULL, '2025-01-01T08:00:00', '2025-01-01T08:00:00', 1, 1, 1),
        (2, 'زهرا رضایی', 'NP-1002', 1, NULL, NULL, NULL, '2025-01-02T09:15:00', '2025-01-02T09:15:00', 1, 1, 1),
        (3, 'سارا محسنی', 'NP-1003', 1, NULL, NULL, NULL, '2025-01-03T10:30:00', '2025-01-03T10:30:00', 1, 1, 1),
        (4, 'کلینیک سپید', 'LP-2001', 2, NULL, NULL, NULL, '2025-01-04T11:00:00', '2025-01-04T11:00:00', 1, 1, 1),
@@ -32,7 +32,7 @@ VALUES (1, 'علی احمدی', 'NP-1001', 1, NULL, NULL, NULL, '2025-01-01T08:0
 
 -- Seed natural persons
 INSERT INTO natural_person (id, firstname, lastname, national_code, father_name, birth_date, gender_id, is_dead)
-VALUES (1, 'علی', 'احمدی', '0012345678', 'حسین', '1990-05-21', 1, FALSE),
+VALUES (19, 'علی', 'احمدی', '0012345678', 'حسین', '1990-05-21', 1, FALSE),
        (2, 'زهرا', 'رضایی', '0023456789', 'اکبر', '1992-09-12', 2, FALSE),
        (3, 'سارا', 'محسنی', '0034567891', 'جعفر', '1988-02-08', 2, FALSE),
        (5, 'رضا', 'شریفی', '0045678912', 'علی', '1985-03-14', 1, FALSE),
@@ -73,7 +73,7 @@ VALUES (1, 'ویزیت عمومی', '2025-01-05T09:30:00', '2025-01-05T09:30:00'
 
 -- Seed doctors
 INSERT INTO doctor (id, medical_number)
-VALUES (1, '1236'),(2, '235'),(3, '777'),(5, '4521'),
+VALUES (19, '1236'),(2, '235'),(3, '777'),(5, '4521'),
        (6, '7846'),(7, '6663'),(9, '8888'),(10, '98552'),
        (12, '3210'),(13, '74110');
 
@@ -93,7 +93,7 @@ VALUES (1, 'قلب و عروق', '2025-01-05T10:00:00', '2025-01-05T10:00:00', 1
 -- Seed doctor specialities
 INSERT INTO doctor_speciality (id, doctor_id, speciality_id, creation_date, last_modification_date, disable_date,
                                version, creator_id, last_modifier_id)
-VALUES (1, 1, 1, '2025-01-06T08:15:00', '2025-01-06T08:15:00', NULL, 1, 1, 1),
+VALUES (1, 19, 1, '2025-01-06T08:15:00', '2025-01-06T08:15:00', NULL, 1, 1, 1),
        (2, 2, 2, '2025-01-06T08:20:00', '2025-01-06T08:20:00', NULL, 1, 1, 1),
        (3, 3, 3, '2025-01-06T08:25:00', '2025-01-06T08:25:00', NULL, 1, 1, 1),
        (4, 5, 4, '2025-01-06T08:30:00', '2025-01-06T08:30:00', NULL, 1, 1, 1),
@@ -107,7 +107,7 @@ VALUES (1, 1, 1, '2025-01-06T08:15:00', '2025-01-06T08:15:00', NULL, 1, 1, 1),
 -- Seed doctor service company relations
 INSERT INTO doctor_company_service (id, doctor_id, service_id, company_id, creation_date, last_modification_date,
                                     disable_date, version, creator_id, last_modifier_id)
-VALUES (1, 1, 1, 4, '2025-01-06T08:30:00', '2025-01-06T08:30:00', NULL, 1, 1, 1),
+VALUES (1, 19, 1, 4, '2025-01-06T08:30:00', '2025-01-06T08:30:00', NULL, 1, 1, 1),
        (2, 2, 2, 4, '2025-01-06T08:35:00', '2025-01-06T08:35:00', NULL, 1, 1, 1),
        (3, 3, 3, 4, '2025-01-06T08:40:00', '2025-01-06T08:40:00', NULL, 1, 1, 1),
        (4, 5, 4, 8, '2025-01-06T08:45:00', '2025-01-06T08:45:00', NULL, 1, 1, 1),
@@ -154,8 +154,7 @@ VALUES (1, 'ویزیت اولیه', '2025-01-07T09:30:00', '2025-01-07T09:30:00'
        (5, 'ویزیت اورژانسی', '2025-01-07T09:50:00', '2025-01-07T09:50:00', 1, 1, 1);
 
 -- Seed reservation types
-INSERT INTO reservation_type (id, name, creation_date, last_modification_date, version, creator_id,
-                              last_modifier_id)
+INSERT INTO reservation_type (id, name, creation_date, last_modification_date, version, creator_id,last_modifier_id)
 VALUES (1, 'رزرو اینترنتی', '2025-01-07T09:40:00', '2025-01-07T09:40:00', 1, 1, 1),
        (2, 'رزرو تلفنی', '2025-01-07T09:45:00', '2025-01-07T09:45:00', 1, 1, 1),
        (3, 'رزرو حضوری', '2025-01-07T09:50:00', '2025-01-07T09:50:00', 1, 1, 1);
@@ -164,8 +163,8 @@ VALUES (1, 'رزرو اینترنتی', '2025-01-07T09:40:00', '2025-01-07T09:40
 INSERT INTO appointment (id, patient_id, appointment_status_id, doctor_schedule_id, root_id, parent_id,
                          appointment_type_id, reservation_type_id, appointment_date, appointment_time, creation_date,
                          last_modification_date, disable_date, version, creator_id, last_modifier_id)
-VALUES (1, 14, 1, 1, NULL, NULL,1,1, '2025-07-01', '08:30:00', '2025-06-25 10:00:00', '2025-06-25 10:00:00', NULL, 1, 1, 1),
-       (2, 15, 2, 2, NULL, NULL,1,1, '2025-07-02', '09:00:00', '2025-06-25 11:00:00', '2025-06-25 11:00:00', NULL, 1, 1, 1),
-       (3, 16, 3, 3, NULL, NULL,1,1, '2025-07-03', '10:30:00', '2025-06-25 12:00:00', '2025-06-25 12:00:00', NULL, 1, 1, 1),
-       (4, 17, 4, 4, NULL, NULL, 1,1,'2025-07-04', '11:15:00', '2025-06-25 13:00:00', '2025-06-25 13:10:00', NULL, 1, 1, 1),
-       (5, 18, 5, 5, NULL, NULL,1,1, '2025-07-05', '12:00:00', '2025-06-25 14:00:00', '2025-06-25 14:05:00', NULL, 1, 1, 1);
+VALUES (4, 14, 5, 1, NULL, NULL,1,1, '2025-07-01', '08:30:00', '2025-06-25 10:00:00', '2025-06-25 10:00:00', NULL, 1, 1, 1),
+       (5, 15, 2, 2, NULL, NULL,1,1, '2025-07-02', '09:00:00', '2025-06-25 11:00:00', '2025-06-25 11:00:00', NULL, 1, 1, 1),
+       (6, 16, 3, 3, NULL, NULL,1,1, '2025-07-03', '10:30:00', '2025-06-25 12:00:00', '2025-06-25 12:00:00', NULL, 1, 1, 1),
+       (7, 17, 2, 4, NULL, NULL, 1,1,'2025-10-03', '11:15:00', '2025-06-25 13:00:00', '2025-06-25 13:10:00', NULL, 1, 1, 1),
+       (8, 18, 1, 7, NULL, NULL,1,1, '2025-10-03', '12:15:00', '2025-06-25 14:00:00', '2025-06-25 14:05:00', NULL, 1, 1, 1);

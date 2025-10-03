@@ -4,8 +4,6 @@ import com.sayan.appointment_management.model.response.ErrorResponse;
 import com.sayan.appointment_management.model.response.Response;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +11,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +19,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ExceptionHandler {
 
-    private final MessageSource messageSource;
+    private final MessageSourceAccessor messageSourceAccessor;
 
     @org.springframework.web.bind.annotation.ExceptionHandler(RecordNotFoundException.class)
     public ResponseEntity<Response<Object>> handleException(
@@ -30,10 +27,17 @@ public class ExceptionHandler {
         ErrorResponse error = ErrorResponse.error(
                 HttpStatus.NOT_FOUND.value(),
                 exception.getClass().getName(),
-                messageSource.getMessage(
-                        exception.getMessage(),
-                        null,
-                        LocaleContextHolder.getLocale()));
+                messageSourceAccessor.getMessage(exception.getMessage()));
+        return new ResponseEntity<>(Response.error(List.of(error)), HttpStatus.NOT_FOUND);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(DuplicatedObjectException.class)
+    public ResponseEntity<Response<Object>> handleException(
+            DuplicatedObjectException exception, HttpServletRequest request) {
+        ErrorResponse error = ErrorResponse.error(
+                HttpStatus.NOT_FOUND.value(),
+                exception.getClass().getName(),
+                messageSourceAccessor.getMessage(exception.getMessage()));
         return new ResponseEntity<>(Response.error(List.of(error)), HttpStatus.NOT_FOUND);
     }
 
@@ -57,10 +61,7 @@ public class ExceptionHandler {
         return ErrorResponse.error(
                 Integer.parseInt(Objects.requireNonNull(error.getCode())),
                 error.getClass().getName(),
-                messageSource.getMessage(
-                        Objects.requireNonNull(error.getDefaultMessage()),
-                        null,
-                        LocaleContextHolder.getLocale()));
+                messageSourceAccessor.getMessage(Objects.requireNonNull(error.getDefaultMessage())));
     }
 
 }
